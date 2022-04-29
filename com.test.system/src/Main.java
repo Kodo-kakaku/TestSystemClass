@@ -1,41 +1,42 @@
 import input.UserInput;
-import interrogation.ReviewTesting;
-import test.Question;
+import interrogation.ConductingSurvey;
+import survey.QuestionnaireWithAnswers;
 
 public class Main {
     public static void main(String[] args) {
-        Question firstQuestion = new Question(
+
+        QuestionnaireWithAnswers firstQuestion = new QuestionnaireWithAnswers(
                 "C++ is an object oriented language, and C, BASIC, and Pascal are _____ languages",
                 "procedural",
                 "procedural", "scripting", "general purpose", "web based"
         );
 
-        Question secondQuestion = new Question(
+        QuestionnaireWithAnswers secondQuestion = new QuestionnaireWithAnswers(
                 "In C++, a pointer is",
                 "variable for storing addresses",
                 "address of a variable", "variable for storing addresses",
                 "data type of an address variable", "constant value"
         );
 
-        Question thirdQuestion = new Question(
+        QuestionnaireWithAnswers thirdQuestion = new QuestionnaireWithAnswers(
                 "\"Google Language Translator\" is an example of the application of",
                 "machine learning",
                 "internet", "debugging", "computer simulations", "machine learning"
         );
 
-        ReviewTesting testing = new ReviewTesting(firstQuestion, secondQuestion, thirdQuestion);
+        ConductingSurvey survey = new ConductingSurvey(firstQuestion, secondQuestion, thirdQuestion);
+        UserInput input = new UserInput(survey.quantityOfAnswers());
+
         System.out.println("Hi! Take an excellent computer science test:");
-        System.out.println(testing.quantityOfAnswers());
-        UserInput input = new UserInput(testing.quantityOfAnswers());
-        for(int i = 0; i < testing.quantityOfQuestion(); i++) {
-            testing.nextQuestion(i);
+        for(int i = 0; i < survey.quantityOfQuestion(); i++) {
+            survey.nextQuestion(i);
             while (true) {
                 if (input.isCorrectInput()) {
-                    testing.checkAnswer(input.getUserInput(), i);
+                    survey.checkAnswer(input.getUserInput(), i);
                     break;
                 }
             }
         }
-        System.out.println(testing.getResult());
+        System.out.println(survey.getResult());
     }
 }

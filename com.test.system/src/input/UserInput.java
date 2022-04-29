@@ -9,30 +9,30 @@ public class UserInput {
     private final int minimumNumberOfQuestions;
 
     public UserInput(int maximumNumberOfQuestions) {
+        this.userInput = 0;
+        this.minimumNumberOfQuestions = 1;
         this.scanner = new Scanner(System.in);
         this.maximumNumberOfQuestions = maximumNumberOfQuestions;
-        this.minimumNumberOfQuestions = 1;
     }
 
-    private void badInsert() {
-        System.out.printf("The value must be a number " +
-                "in the range from %d to %d! Try again!)\n", minimumNumberOfQuestions, maximumNumberOfQuestions);
-        scanner.next();
-    }
-
+    // User input is reduced by one for the correctness of the array index
     public int getUserInput() {
-        return userInput;
+        return --userInput;
     }
 
     public boolean isCorrectInput() {
-        this.userInput = 0;
+        this.userInput = -1;
         if (scanner.hasNextInt()) {
             this.userInput = scanner.nextInt();
+            return this.userInput >= minimumNumberOfQuestions && this.userInput <= maximumNumberOfQuestions;
         }
-        if (this.userInput >= minimumNumberOfQuestions && this.userInput <= maximumNumberOfQuestions) {
-            return true;
-        }
-        badInsert();
+        return badInsert();
+    }
+
+    private boolean badInsert() {
+        System.out.printf("The value must be a number " +
+                "in the range from %d to %d! Try again!)\n", minimumNumberOfQuestions, maximumNumberOfQuestions);
+        scanner.next();
         return false;
     }
 }
