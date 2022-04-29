@@ -29,6 +29,25 @@ public class ConductingSurveyTest {
         );
     }
 
+    @Test
+    public void testQuantityOfAnswers() {
+        assertEquals(4, this.survey.quantityOfAnswers());
+    }
 
+    @Test
+    public void testQuantityOfQuestion() {
+        assertEquals(3, this.survey.quantityOfQuestion());
+    }
 
+    @Test
+    @Before
+    public void testCheckAnswer() {
+        this.survey.checkAnswer(0, 0);
+    }
+
+    @Test
+    public void testResult() {
+        assertEquals("Result: right 1, not right 2",
+                this.survey.getResult());
+    }
 }
